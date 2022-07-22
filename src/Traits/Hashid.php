@@ -12,6 +12,6 @@ trait Hashid
      */
     public function getHashidAttribute()
     {
-        return config('hashid.enable') ? id_encode($this->getKey()) : $this->getKey();
+        return config('hashid.enabled') ? id_encode($this->getKey()) : $this->getKey();
     }
 }
