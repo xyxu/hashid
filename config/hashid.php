@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'salt' => env('APP_KEY'), //盐值，默认使用APP_KEY
-    'min_hash_length' => 0, //加密字符串的最小长度
+    'enable' => env('HASHID_ENABLED', true),
+    'salt' => env('HASHIDS_SALT', 'salt'),
+    'min_length' => env('HASHIDS_MIN_LENGTH', 4),
     'alphabet' => env('HASH_ID_ALPHABET', 'Fi1yqx4mk3Bda7DfMCjWoOSUHYTRKhuszl2cg5pXLe6AwEGn8NvJ9VtZr0IQbP')
 ];

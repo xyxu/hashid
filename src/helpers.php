@@ -11,10 +11,14 @@ if (! function_exists('id_encode')) {
      */
     function id_encode($int)
     {
+        if (! config('hashid.enabled')) return $int;
+
         if (! is_numeric($int) || $int < 0 || ! is_int($int + 0)) {
-            throw new HashidException('Only positive integers can be accepted!');
+            return $int;
         }
+
         $hashid = new Hashids(config('hashid.salt'), config('hashid.min_hash_length'), config('hashid.alphabet'));
+
         return $hashid->encode($int);
     }
 }
@@ -28,14 +32,19 @@ if (! function_exists('id_decode')) {
      */
     function id_decode($str)
     {
+	if (! config('hashid.enabled')) return $str;
+
         if (! preg_match('/^[0-9a-zA-Z]{2,18}$/', $str)) {
-            throw new HashidException('Bad parameter! Between 2-18 characters');
+            return $str;
         }
+
         $hashid = new Hashids(config('hashid.salt'), config('hashid.min_hash_length'), config('hashid.alphabet'));
-        $result = $hashid->decode($str);
+        $result = $hashid->decode(strval($str));
+
         if (count($result) !== 1) {
-            throw new HashidException('Unable to decrypt!');
+            return $str;
         }
+
         return $result[0];
     }
 }

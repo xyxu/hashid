@@ -10,8 +10,8 @@ trait Hashid
      * @param $value
      * @return null|string
      */
-    public function getIdAttribute($value)
+    public function getHashidAttribute()
     {
-        return id_encode($value);
+        return config('hashid.enable') ? id_encode($this->getKey()) : $this->getKey();
     }
 }

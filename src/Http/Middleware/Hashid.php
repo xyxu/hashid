@@ -15,6 +15,8 @@ class Hashid
      */
     public function handle($request, Closure $next, ...$parameter)
     {
+        if (! config('hashid.enabled')) return $next($request);
+
         $router = Route::current();
         if ($router->hasParameters()) {
             $parameterNames = $router->parameterNames();
@@ -28,6 +30,7 @@ class Hashid
                 }
             }
         }
+
         return $next($request);
     }
 
